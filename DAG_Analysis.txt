@@ -1,0 +1,59 @@
+DAG ANALYSIS
+Date: August 27, 2026
+
+PIPELINE GIVEN:
+fetch -> parse
+parse -> transform
+transform -> validate
+validate -> parse
+parse -> store
+
+STEP 1: List all nodes and edges
+
+Nodes: fetch, parse, transform, validate, store
+
+Edges:
+  fetch -> parse
+  parse -> transform
+  transform -> validate
+  validate -> parse
+  parse -> store
+
+STEP 2: Compute indegree for each node
+
+fetch:     0  (no incoming edges)
+parse:     2  (from fetch, from validate)
+transform: 1  (from parse)
+validate:  1  (from transform)
+store:     1  (from parse)
+
+STEP 3: Apply Kahn's algorithm by hand
+
+Start with nodes that have indegree 0:
+  Queue: [fetch]
+  Order: []
+
+Process fetch:
+  Order: [fetch]
+  Decrement parse (2 -> 1)
+
+Queue is now empty, but parse, transform, validate, and store remain.
+
+STEP 4: Name the cycle
+
+The nodes that never reached indegree 0:
+  parse, transform, validate
+
+These form a cycle:
+  parse -> transform -> validate -> parse
+
+STEP 5: Which edge to remove?
+
+Remove: validate -> parse
+
+Why: This edge creates the loop. Without it, the chain becomes:
+  fetch -> parse -> transform -> validate
+  parse -> store
+
+Now parse has indegree 1 (only from fetch), and every node can be ordered:
+  fetch, parse, transform, validate, store

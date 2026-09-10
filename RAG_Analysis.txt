@@ -1,0 +1,42 @@
+
+
+PART 1: TRACING A REAL RETRIEVAL
+
+Question asked: "What is the approval limit before a request needs a senior approver?"
+
+What was cited: A chunk from the approval policy document (section 4.2)
+
+Score: The chunk was the top match, so its similarity score was highest.
+
+Did the source support the answer? Yes. The chunk said:
+"Requests over $5,000 require senior approval before processing."
+
+Was the answer correct? Yes.
+
+PART 2: DIAGNOSING A BAD RETRIEVAL
+
+Scenario:
+  Question: "What's our current PTO carryover limit?"
+  Answer: "5 days"
+  Cited source: 2019 Employee Handbook
+  Score: 81%
+
+Step 1: Note what was cited and its score.
+  Cited: 2019 handbook, scored 81%.
+
+Step 2: Does a more current source exist?
+  Yes - a 2026 PTO policy document exists in the knowledge base.
+
+Step 3: Why did the wrong source win?
+  The 2026 document likely scored lower than 81%.
+  This points to a chunking or embedding quality problem, not an indexing gap.
+  The correct document was indexed, but its chunks didn't match the question well.
+
+Step 4: What would fix it?
+  The most likely fix is chunk size or overlap.
+  If the 2026 policy's PTO section was split badly, the relevant sentence
+  might be buried or separated from its context.
+  Adjusting chunk size (or overlap) would help the right chunk score higher.
+
+  If the 2026 document was never indexed at all, then the fix is a re-index -
+  no tuning knob can help a chunk that was never stored.
